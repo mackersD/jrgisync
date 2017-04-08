@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+  <plugin-info>
+    <description>${project.description}</description>
+    <version>${project.version}</version>
+    <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+    <param name="plugin-icon">images/pluginIcon.png</param>
+    <param name="plugin-logo">images/pluginLogo.png</param>
+    <!--<param name="configure.url">/admin/plugins/jrgisync/configurePlugin.action</param>-->
+  </plugin-info>
+  <!-- add our i18n resource -->
+  <resource type="i18n" name="i18n" location="jrgisync"/>
+  <!-- add our web resources -->
+  <web-resource key="jrgisync-resources" name="jrgisync Web Resources">
+    <dependency>com.atlassian.auiplugin:ajs</dependency>
+    <resource type="download" name="jrgisync.css" location="/css/jrgisync.css"/>
+    <resource type="download" name="jrgisync.js" location="/js/jrgisync.js"/>
+    <resource type="download" name="images/" location="/images"/>
+    <context>jrgisync</context>
+  </web-resource>
+  <servlet name="Issue Servlet" i18n-name-key="issue-servlet.name" key="issue-servlet" class="com.mackersD.jrgisync.servlet.IssueServlet">
+    <description key="issue-servlet.description"/>
+    <url-pattern>/jrgisync/issue</url-pattern>
+  </servlet>
+  <component key="issue-helper-impl" class="com.mackersD.jrgisync.components.IssueHelperImpl" name="Issue Helper Impl" i18n-name-key="issue-helper-impl.name">
+    <description key="issue-helper-impl.description">The Issue Helper Impl Plugin</description>
+    <interface>com.mackersD.jrgisync.components.IssueHelper</interface>
+  </component>
+  <servlet name="Admin Servlet" i18n-name-key="admin-servlet.name" key="admin-servlet" class="com.mackersD.jrgisync.servlet.AdminServlet">
+    <description key="admin-servlet.description">The Admin Servlet Plugin</description>
+    <url-pattern>/jrgisync/admin</url-pattern>
+  </servlet>
+  <component-import key="templateRenderer" interface="com.atlassian.templaterenderer.TemplateRenderer" filter=""/>
+  <component-import key="userManager" interface="com.atlassian.sal.api.user.UserManager" filter=""/>
+  <component-import key="loginUriProvider" interface="com.atlassian.sal.api.auth.LoginUriProvider" filter=""/>
+</atlassian-plugin>
