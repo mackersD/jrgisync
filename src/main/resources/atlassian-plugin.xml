@@ -34,4 +34,7 @@
   <component-import key="templateRenderer" interface="com.atlassian.templaterenderer.TemplateRenderer" filter=""/>
   <component-import key="userManager" interface="com.atlassian.sal.api.user.UserManager" filter=""/>
   <component-import key="loginUriProvider" interface="com.atlassian.sal.api.auth.LoginUriProvider" filter=""/>
+  <rest name="Admin" i18n-name-key="admin.name" key="admin" path="/jrgisync/admin" version="1.0">
+    <description key="admin.description">The Admin Plugin</description>
+  </rest>
 </atlassian-plugin>
