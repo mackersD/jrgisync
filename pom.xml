@@ -205,4 +205,32 @@
         <!-- TestKit version 6.x for JIRA 6.x -->
         <testkit.version>6.3.11</testkit.version>
     </properties>
+    <repositories>
+    <repository>
+        <id>atlassian</id>
+        <name>Atlassian Repository</name>
+        <url>https://maven.atlassian.com/content/groups/public/</url>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+    </repository>
+</repositories>
+
+<pluginRepositories>
+    <pluginRepository>
+        <id>atlassian-public</id>
+        <url>https://m2proxy.atlassian.com/repository/public/</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </pluginRepository>
+</pluginRepositories>
 </project>
+
+

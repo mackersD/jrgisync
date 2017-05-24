@@ -1,53 +1,77 @@
 package com.mackersD.jrgisync.servlet;
 
-import com.atlassian.plugin.spring.scanner.annotation.component.Scanned;
-import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
+import com.atlassian.jira.bc.project.ProjectService;
+import com.atlassian.jira.project.Project;
+import com.atlassian.jira.user.ApplicationUser;
 import com.atlassian.sal.api.auth.LoginUriProvider;
 import com.atlassian.sal.api.user.UserManager;
+import com.atlassian.sal.api.user.UserProfile;
 import com.atlassian.templaterenderer.TemplateRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.inject.Inject;
 import javax.servlet.*;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 
-//@Scanned
 public class AdminServlet extends HttpServlet{
+    
     private static final Logger log = LoggerFactory.getLogger(AdminServlet.class);
-    //@ComponentImport
     private final UserManager userManager;
-    //@ComponentImport
     private final LoginUriProvider loginUriProvider;
-    //@ComponentImport
     private final TemplateRenderer templateRenderer;
+    private final ProjectService projectService;
+    private final com.atlassian.jira.user.util.UserManager jiraUserManager;
     
     //@Inject
     public AdminServlet(
             UserManager userManager,
             LoginUriProvider loginUriProvider,
-            TemplateRenderer templateRenderer
+            TemplateRenderer templateRenderer,
+            ProjectService projectService,
+            com.atlassian.jira.user.util.UserManager jiraUserManager
     ) {
         this.userManager = userManager;
         this.loginUriProvider = loginUriProvider;
         this.templateRenderer = templateRenderer;
+        this.projectService = projectService;
+        this.jiraUserManager = jiraUserManager;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         //check to see if the logged-in user is an admin
-        String username = userManager.getRemoteUsername(req);
-        if(username == null || !userManager.isSystemAdmin(username)) {
+        
+        UserProfile user = userManager.getRemoteUser(req);
+        if(user == null || !userManager.isSystemAdmin(user.getUserKey())) {
             redirectToLogin(req, resp);
             return;
         }
         
         resp.setContentType("text/html;charset=utf-8");
-        templateRenderer.render("templates/admin.vm", resp.getWriter());
+        templateRenderer.render("templates/admin.vm", getFormData(req, user), resp.getWriter());
+    }
+    
+    private HashMap<String, Object> getFormData(HttpServletRequest req, UserProfile user) {
+        
+        HashMap<String, Object> formData = new HashMap<String, Object>();
+        ApplicationUser jiraUser = jiraUserManager.getUserByKey(user.getUserKey().getStringValue());
+        
+        //get projectsc
+        Collection<Project> projects = projectService.getAllProjects(jiraUser).getReturnedValue();
+        formData.put("projects", projects);
+        
+        //get users
+        Collection<ApplicationUser> users = jiraUserManager.getAllApplicationUsers();
+        formData.put("users", users);
+        
+        return formData;
     }
     
     private void redirectToLogin(HttpServletRequest req, HttpServletResponse resp) throws IOException {

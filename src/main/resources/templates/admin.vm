@@ -6,26 +6,37 @@
         $webResourceManager.requireResource("com.atlassian.auiplugin:aui-select")
 
     </head>
-    <body>
+    <body>        
         <form id="admin" class="aui">
             <div class="field-group">
-                <label for="name">$i18n.getText("jrgisync.admin.name.label")</label>
+                <label for="name">$i18n.getText("jrgisync.admin.preSharedSecret.label")</label>
                 <input type="text" id="name" name="name" class="text"/>
             </div>
             <div class="field-group">
-                <label for="time">$i18n.getText("jrgisync.admin.time.label")</label>
-                <input type="text" id="time" name="time" class="text"/>
-            </div>
-            <div class="field-group">
-                <aui-label for="project">Select the default project:</aui-label>
+                <aui-label for="project">$i18n.getText("jrgisync.admin.projectKey.label")</aui-label>
                 <p>
                     <aui-select
                         id="project"
                         name="project"
-                        placeholder="Select the project"
+                        placeholder=""
                     >
-                        <aui-option>TP</aui-option>
-                        <aui-option>Other</aui-option>
+                    #foreach( $project in $context.projects)
+                        <aui-option>$project.key</aui-option>
+                    #end
+                    </aui-select>
+                </p>
+            </div>
+            <div class="field-group">
+                <aui-label for="project">$i18n.getText("jrgisync.admin.defaultUser.label")</aui-label>
+                <p>
+                    <aui-select
+                        id="user"
+                        name="user"
+                        placeholder=""
+                    >
+                    #foreach($user in $context.users)
+                        <aui-option>$user.key</aui-option>
+                    #end
                     </aui-select>
                 </p>
             </div>
