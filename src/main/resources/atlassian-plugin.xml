@@ -7,7 +7,7 @@
     <vendor name="${project.organization.name}" url="${project.organization.url}"/>
     <param name="plugin-icon">images/pluginIcon.png</param>
     <param name="plugin-logo">images/pluginLogo.png</param>
-    <!--<param name="configure.url">/admin/plugins/jrgisync/configurePlugin.action</param>-->
+    <param name="configure.url">/plugins/servlet/jrgisync/admin</param>
   </plugin-info>
   <!-- add our i18n resource -->
   <resource type="i18n" name="i18n" location="jrgisync"/>

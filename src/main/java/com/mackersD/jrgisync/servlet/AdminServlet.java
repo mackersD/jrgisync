@@ -46,16 +46,22 @@ public class AdminServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        //check to see if the logged-in user is an admin
-        
+        //check to see if the logged-in user is an admin        
         UserProfile user = userManager.getRemoteUser(req);
         if(user == null || !userManager.isSystemAdmin(user.getUserKey())) {
             redirectToLogin(req, resp);
             return;
         }
         
+        //render admin form
         resp.setContentType("text/html;charset=utf-8");
         templateRenderer.render("templates/admin.vm", getFormData(req, user), resp.getWriter());
+    }
+    
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        
     }
     
     private HashMap<String, Object> getFormData(HttpServletRequest req, UserProfile user) {
@@ -63,7 +69,7 @@ public class AdminServlet extends HttpServlet{
         HashMap<String, Object> formData = new HashMap<String, Object>();
         ApplicationUser jiraUser = jiraUserManager.getUserByKey(user.getUserKey().getStringValue());
         
-        //get projectsc
+        //get projects
         Collection<Project> projects = projectService.getAllProjects(jiraUser).getReturnedValue();
         formData.put("projects", projects);
         
