@@ -2,22 +2,21 @@
     <head>
         <title>$i18n.getText("jrgisync.admin.label")</title>
         <meta name="decorator" content="atl.admin">
-        $webResourceManager.requireResource("com.atlassian.auiplugin:ajs")
         $webResourceManager.requireResource("com.atlassian.auiplugin:aui-select")
-
+        $webResourceManager.requireResource("com.mackersD.jrgisync.jrgisync:jrgisync-resources")
     </head>
     <body>        
         <form id="admin" class="aui">
             <div class="field-group">
-                <label for="name">$i18n.getText("jrgisync.admin.preSharedSecret.label")</label>
-                <input type="text" id="name" name="name" class="text"/>
+                <label for="preSharedSecret">$i18n.getText("jrgisync.admin.preSharedSecret.label")</label>
+                <input type="text" id="preSharedSecret" name="preSharedSecret" class="text"/>
             </div>
             <div class="field-group">
-                <aui-label for="project">$i18n.getText("jrgisync.admin.projectKey.label")</aui-label>
+                <aui-label for="defaultProject">$i18n.getText("jrgisync.admin.defaultProject.label")</aui-label>
                 <p>
                     <aui-select
-                        id="project"
-                        name="project"
+                        id="defaultProject"
+                        name="defaultProject"
                         placeholder=""
                     >
                     #foreach( $project in $context.projects)
@@ -27,11 +26,11 @@
                 </p>
             </div>
             <div class="field-group">
-                <aui-label for="project">$i18n.getText("jrgisync.admin.defaultUser.label")</aui-label>
+                <aui-label for="defaultUser">$i18n.getText("jrgisync.admin.defaultUser.label")</aui-label>
                 <p>
                     <aui-select
-                        id="user"
-                        name="user"
+                        id="defaultUser"
+                        name="defaultUser"
                         placeholder=""
                     >
                     #foreach($user in $context.users)

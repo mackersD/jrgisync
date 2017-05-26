@@ -5,8 +5,8 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AdminModel {
     
-    @XmlElement(name = "projectKey")
-    private String projectKey;
+    @XmlElement(name = "defaultProject")
+    private String defaultProject;
     
     @XmlElement(name = "defaultUser")
     private String defaultUser;
@@ -17,12 +17,12 @@ public class AdminModel {
     public AdminModel() {
     }
 
-    public String getProjectKey() {
-        return this.projectKey;
+    public String getDefaultProject() {
+        return this.defaultProject;
     }
 
-    public void setProjectKey(String key) {
-        this.projectKey = key;
+    public void setDefaultProject(String project) {
+        this.defaultProject = project;
     }
     
     public String getDefaultUser() {

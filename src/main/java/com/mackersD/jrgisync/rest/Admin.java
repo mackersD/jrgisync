@@ -57,7 +57,7 @@ public class Admin {
                 {
                     PluginSettings settings = pluginSettingsFactory.createGlobalSettings();
                     AdminModel model = new AdminModel();
-                    model.setProjectKey((String) settings.get(AdminModel.class.getName() + ".projectKey"));
+                    model.setDefaultProject((String) settings.get(AdminModel.class.getName() + ".defaultProject"));
                     model.setDefaultUser((String) settings.get(AdminModel.class.getName() + ".defaultUser"));
 
                     return model;
